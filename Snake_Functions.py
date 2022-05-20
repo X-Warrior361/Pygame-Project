@@ -2,6 +2,7 @@ import pygame
 import sys
 import random
 from Snake_Class import Body
+from time import sleep
 
 
 def collide(snake, mouse, body, ai_screen, score):
@@ -57,7 +58,10 @@ def mouse_update(ai_screen, snake, mouse, body):
 
 
 def snake_update(snake, body):
-    if snake.type1 == 1 and snake.rect.right <= snake.screen_rect.right:
+    if snake.pause:
+        pass
+
+    elif snake.type1 == 1 and snake.rect.right <= snake.screen_rect.right:
         snake.x += snake.speed
 
     elif snake.type1 == 0 and snake.rect.top >= 0:
@@ -96,6 +100,11 @@ def events(snake, body):
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_END:
                 sys.exit()
+
+            elif event.key == pygame.K_SPACE:
+                if snake.once:
+                    snake.pause = not snake.pause
+                    snake.once = not snake.once
 
             elif event.key == pygame.K_UP and snake.type2 != 2:
                 snake.type1 = 0

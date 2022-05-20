@@ -13,9 +13,11 @@ class Snake:
         self.screen = screen
         self.width = 75
         self.height = 75
-        self.speed = 1.5
+        self.speed = 0.1
         self.type1 = 1
         self.type2 = 1
+        self.pause = True
+        self.once = True
         self.angle = 90
         self.direction = [True, True, True, True]
         self.active = True
@@ -80,7 +82,10 @@ class Body:
                 body[num].y_change = self.y_change
                 body[num].type_new = self.type_new
 
-        if self.type_now == 0:
+        if snake.pause:
+            pass
+
+        elif self.type_now == 0:
             self.y -= snake.speed
 
         elif self.type_now == 1:
@@ -133,7 +138,7 @@ class Score:
         self.font = pygame.font.SysFont('DejaVu Sans Mono', 50, True)
         self.prep_score()
 
-    def prep_score(self,end = False):
+    def prep_score(self, end=False):
         self.stats_str = "{:,}".format(int(self.stats))
         self.image = self.font.render(self.stats_str, True, self.text_color)
         self.rect = self.image.get_rect()
@@ -144,9 +149,9 @@ class Score:
             self.rect.y = 300
 
     def prep_image(self):
-        self.msg_image = self.font.render('Your Score : ', True, self.text_color)
+        self.msg_image = self.font.render('Your Score: ', True, self.text_color)
         self.msg_rect = self.msg_image.get_rect()
-        self.msg_rect.x = 500
+        self.msg_rect.x = 400
         self.msg_rect.y = 300
         self.screen.blit(self.msg_image, self.msg_rect)
 
